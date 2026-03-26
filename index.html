@@ -294,7 +294,14 @@
   }
   .f-step:last-child{margin-bottom:0;}
   .f-step:hover{border-color:var(--palette-blue-600);}
-  .f-e{font-size:1.1rem;min-width:26px;text-align:center;}
+  .f-e{
+    min-width:34px;height:34px;
+    background:rgba(50,121,249,0.08);
+    border:1px solid rgba(50,121,249,0.18);
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
   .f-i{flex:1;}
   .f-t{font-size:var(--sm-size);font-weight:450;color:var(--theme-surface-on-surface);}
   .f-s{font-size:var(--xs-size);color:var(--theme-surface-on-surface-variant);}
@@ -349,17 +356,44 @@
     transition:box-shadow .25s;
   }
   .rec-card:hover{box-shadow:0 8px 32px rgba(var(--palette-grey-1000-rgb),.07);}
-  .rec-card.filled{background:var(--theme-surface-on-surface);color:var(--theme-surface-surface);}
-  .rec-card.filled .body-text{color:rgba(var(--palette-grey-0-rgb),.7);}
-  .rec-card.filled .eyebrow{color:rgba(var(--palette-grey-0-rgb),.5);}
+  .rec-card.filled{
+    background:linear-gradient(135deg, #0f1117 0%, #1a1d2e 50%, #0f1117 100%);
+    color:var(--theme-surface-surface);
+    border: 1px solid rgba(50,121,249,0.2);
+    position:relative;overflow:hidden;
+  }
+  .rec-card.filled::before {
+    content:'';position:absolute;top:-1px;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, transparent, var(--palette-blue-600), transparent);
+  }
+  .rec-card.filled::after {
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 30% 0%, rgba(50,121,249,0.12), transparent 60%);
+    pointer-events:none;
+  }
+  .rec-card.filled .body-text{color:rgba(230,234,240,0.65);}
+  .rec-card.filled .eyebrow{color:rgba(50,121,249,0.8);}
   .rec-icon{font-size:1.8rem;margin-bottom:var(--space-md);display:block;}
   .rec-badge{
     display:inline-block;font-size:var(--xs-size);font-weight:450;
     letter-spacing:.1em;text-transform:uppercase;
     background:rgba(var(--palette-grey-1000-rgb),.06);
+    border:1px solid rgba(var(--palette-grey-1000-rgb),.08);
     padding:4px var(--space-md);border-radius:var(--shape-corner-rounded);margin-bottom:var(--space-md);
   }
-  .rec-card.filled .rec-badge{background:rgba(var(--palette-grey-0-rgb),.14);color:rgba(var(--palette-grey-0-rgb),.7);}
+  .rec-card.filled .rec-badge{
+    background:rgba(50,121,249,0.15);
+    border:1px solid rgba(50,121,249,0.3);
+    color:rgba(147,197,253,0.9);
+  }
+  .rec-card:not(.filled) {
+    background:var(--theme-surface-surface-container);
+    border:1px solid rgba(var(--palette-grey-1000-rgb),.06);
+  }
+  .rec-card:not(.filled):hover {
+    border-color:rgba(50,121,249,0.2);
+    box-shadow:0 12px 40px rgba(var(--palette-grey-1000-rgb),.06);
+  }
 
   /* ═══ PRICING ═══ */
   .pricing-wrap{
@@ -497,18 +531,7 @@
   .section-reveal.delay-2 { transition-delay:0.2s; }
   .section-reveal.delay-3 { transition-delay:0.3s; }
 
-  /* Floating number for hero — subtle atmosphere */
-  .hero-float {
-    position:absolute;
-    font-family:var(--font);
-    font-size:var(--xs-size);
-    color:rgba(var(--palette-grey-1000-rgb),.12);
-    letter-spacing:.15em;
-    text-transform:uppercase;
-    font-weight:450;
-    user-select:none;
-    pointer-events:none;
-  }
+  /* hero float removed */
 
   /* Mobile improvements */
   @media(max-width:767px) {
@@ -535,11 +558,105 @@
     .stat-num { font-size:var(--4xl-size); }
   }
 
+
+  /* Logo scroll animation */
+  .nav-logo svg { transition: transform 0.3s ease; }
+  .site-nav.scrolled .nav-logo svg { transform: rotate(360deg) scale(1.1); }
+  
+  /* Page-wide smooth scroll sections */
+  section { will-change: transform; }
+
+
+  .site-nav.scrolled {
+    background: rgba(var(--palette-grey-0-rgb), 0.96);
+    box-shadow: 0 1px 0 var(--divider);
+  }
+  .site-nav { transition: background 0.3s, box-shadow 0.3s; }
+
+
+  /* Meta formation glow on canvas */
+  #dot-canvas.meta-active {
+    filter: drop-shadow(0 0 24px rgba(50,121,249,0.18));
+  }
+
+
+  /* ── HERO LOGO ANIMATED ── */
+  .gs-logo-hero {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    opacity:0;
+    animation:fadeIn .6s .15s ease forwards;
+  }
+  .gs-chart { flex-shrink:0; }
+  .gs-line {
+    animation:drawLine 1.2s .4s cubic-bezier(.23,1,.32,1) forwards;
+  }
+  .gs-arrow {
+    animation:fadeArrow .3s 1.5s ease forwards;
+  }
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes fadeArrow {
+    to { opacity: 1; }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  .gs-wordmark {
+    font-family: var(--font);
+    font-size: var(--sm-size);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--theme-surface-on-surface);
+    text-transform: uppercase;
+    opacity:0;
+    animation: fadeIn .6s .9s ease forwards;
+  }
+
   </style>
 </head>
 <body>
 
 <canvas id="dot-canvas"></canvas>
+<!-- Meta logo overlay — appears after particle formation -->
+<div id="meta-overlay" style="
+  position:fixed;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0.6);
+  opacity:0;
+  pointer-events:none;
+  z-index:1;
+  transition:opacity 0.6s ease, transform 0.6s cubic-bezier(.23,1,.32,1);
+">
+  <svg width="180" height="100" viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Meta ∞ logo — lemniscate shape, blue gradient -->
+    <defs>
+      <linearGradient id="metaGrad" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#0082FB"/>
+        <stop offset="50%" stop-color="#0099FF"/>
+        <stop offset="100%" stop-color="#0082FB"/>
+      </linearGradient>
+      <filter id="metaGlow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <path d="
+      M 45 50
+      C 45 28, 70 18, 90 50
+      C 110 82, 135 72, 135 50
+      C 135 28, 110 18, 90 50
+      C 70 82, 45 72, 45 50
+      Z
+    " stroke="url(#metaGrad)" stroke-width="10" fill="none"
+      stroke-linecap="round" stroke-linejoin="round"
+      filter="url(#metaGlow)"
+    />
+  </svg>
+  <p style="text-align:center;font-family:'Google Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#0082FB;margin-top:8px;opacity:0.7;">Meta Ads</p>
+</div>
 <div class="overlay" id="overlay"></div>
 
 <!-- DRAWER -->
@@ -569,12 +686,16 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">
-    <span class="dot-c" style="background:#4285f4"></span>
-    <span class="dot-c" style="background:#ea4335"></span>
-    <span class="dot-c" style="background:#fbbc04"></span>
-    <span class="dot-c" style="background:#34a853"></span>
-    <span class="caption" style="margin-left:4px;">Estrategia Digital &amp; Traffic · +5 años de experiencia</span>
+  <div class="hero-eyebrow" style="gap:12px;">
+    <!-- Animated Growth Strategy wordmark logo -->
+    <div class="gs-logo-hero" aria-label="Growth Strategy">
+      <svg class="gs-chart" width="32" height="32" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line class="gs-axis" x1="10" y1="40" x2="70" y2="40" stroke="#121317" stroke-width="1.5"/>
+        <polyline class="gs-line" points="8,65 22,50 32,56 44,42 56,46 66,28 74,14" fill="none" stroke="#121317" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="120" stroke-dashoffset="120"/>
+        <polygon class="gs-arrow" points="74,14 70,20 78,20" fill="#121317" opacity="0"/>
+      </svg>
+      <span class="gs-wordmark">Growth Strategy</span>
+    </div>
   </div>
   <h1 class="hero-title landing-main">
     <span class="hl">Hacemos crecer tu marca</span><br/>
@@ -634,11 +755,11 @@
       <div class="reveal d1">
         <div class="funnel-wrap">
           <span class="funnel-top">Cómo funciona Meta Ads</span>
-          <div class="f-step"><span class="f-e">👁️</span><div class="f-i"><p class="f-t">Alcance masivo</p><p class="f-s">Facebook + Instagram</p></div><div class="f-bw"><div class="f-b" style="width:100%"></div></div></div>
-          <div class="f-step"><span class="f-e">🎯</span><div class="f-i"><p class="f-t">Segmentación inteligente</p><p class="f-s">Tu cliente ideal, sin desperdiciar</p></div><div class="f-bw"><div class="f-b" style="width:82%"></div></div></div>
-          <div class="f-step"><span class="f-e">💬</span><div class="f-i"><p class="f-t">Anuncios que conectan</p><p class="f-s">Mensajes que generan acción real</p></div><div class="f-bw"><div class="f-b" style="width:65%"></div></div></div>
-          <div class="f-step"><span class="f-e">🛒</span><div class="f-i"><p class="f-t">Conversión real</p><p class="f-s">Leads, ventas y retorno medible</p></div><div class="f-bw"><div class="f-b" style="width:46%"></div></div></div>
-          <div class="f-step"><span class="f-e">📈</span><div class="f-i"><p class="f-t">Escalar resultados</p><p class="f-s">Optimización y crecimiento continuo</p></div><div class="f-bw"><div class="f-b" style="width:30%"></div></div></div>
+          <div class="f-step"><span class="f-e"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5C7 5 2.73 8.11 1 12.5 2.73 16.89 7 20 12 20s9.27-3.11 11-7.5C21.27 8.11 17 5 12 5z" stroke="#3279F9" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#3279F9" stroke-width="1.5"/><circle cx="12" cy="12" r="1.2" fill="#3279F9"/></svg></span><div class="f-i"><p class="f-t">Alcance masivo</p><p class="f-s">Facebook + Instagram</p></div><div class="f-bw"><div class="f-b" style="width:100%"></div></div></div>
+          <div class="f-step"><span class="f-e"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#3279F9" stroke-width="1.5"/><circle cx="12" cy="12" r="5.5" stroke="#3279F9" stroke-width="1.5"/><circle cx="12" cy="12" r="2" fill="#3279F9"/><line x1="12" y1="3" x2="12" y2="1" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/></svg></span><div class="f-i"><p class="f-t">Segmentación inteligente</p><p class="f-s">Tu cliente ideal, sin desperdiciar</p></div><div class="f-bw"><div class="f-b" style="width:82%"></div></div></div>
+          <div class="f-step"><span class="f-e"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#3279F9" stroke-width="1.5" stroke-linejoin="round"/><line x1="8" y1="10" x2="16" y2="10" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/></svg></span><div class="f-i"><p class="f-t">Anuncios que conectan</p><p class="f-s">Mensajes que generan acción real</p></div><div class="f-bw"><div class="f-b" style="width:65%"></div></div></div>
+          <div class="f-step"><span class="f-e"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#3279F9" stroke-width="1.5" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="#3279F9" stroke-width="1.5"/><path d="M16 10a4 4 0 01-8 0" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/></svg></span><div class="f-i"><p class="f-t">Conversión real</p><p class="f-s">Leads, ventas y retorno medible</p></div><div class="f-bw"><div class="f-b" style="width:46%"></div></div></div>
+          <div class="f-step"><span class="f-e"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="16,7 22,7 22,13" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div class="f-i"><p class="f-t">Escalar resultados</p><p class="f-s">Optimización y crecimiento continuo</p></div><div class="f-bw"><div class="f-b" style="width:30%"></div></div></div>
         </div>
       </div>
       <div class="meta-copy reveal d2">
@@ -668,12 +789,12 @@
       <h2 class="heading-2 reveal">Todo lo que tu marca<br/>necesita para crecer.</h2>
     </div>
     <div class="svc-grid">
-      <div class="svc-card reveal d1"><span class="svc-icon">🗺️</span><p class="heading-6">Creación de Estrategia Publicitaria</p><p class="body-text svc-desc">Diseñamos el mapa completo antes de gastar un solo peso: objetivos, audiencias, embudos y mensajes con propósito medible.</p></div>
-      <div class="svc-card reveal d2"><span class="svc-icon">🚀</span><p class="heading-6">Creación de Campañas</p><p class="body-text svc-desc">Configuración técnica impecable: estructura de campañas, conjuntos, creatividades y copys orientados a conversión real.</p></div>
-      <div class="svc-card reveal d3"><span class="svc-icon">📊</span><p class="heading-6">Análisis de Métricas</p><p class="body-text svc-desc">CTR, CPM, CPA, ROAS — interpretamos los datos con claridad para invertir solo en lo que funciona.</p></div>
-      <div class="svc-card reveal d4"><span class="svc-icon">⚡</span><p class="heading-6">Optimización y Seguimiento</p><p class="body-text svc-desc">Ajustes continuos de segmentación, pujas y creatividades. Las campañas mejoran semana a semana.</p></div>
-      <div class="svc-card reveal d5"><span class="svc-icon">📋</span><p class="heading-6">Reporte Semanal y Mensual</p><p class="body-text svc-desc">Transparencia total: resultados claros, qué se ajustó y el plan a seguir. Sin letra pequeña.</p></div>
-      <div class="svc-card reveal d6"><span class="svc-icon">🔁</span><p class="heading-6">Comunicación Constante</p><p class="body-text svc-desc">Canal directo activo para responder, ajustar y escalar cuando los números lo pidan.</p></div>
+      <div class="svc-card reveal d1"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><polygon points="3,6 9,3 15,6 21,3 21,18 15,21 9,18 3,21" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linejoin="round"/><line x1="9" y1="3" x2="9" y2="18" stroke="var(--palette-blue-600)" stroke-width="1.5"/><line x1="15" y1="6" x2="15" y2="21" stroke="var(--palette-blue-600)" stroke-width="1.5"/></svg></span><p class="heading-6">Creación de Estrategia Publicitaria</p><p class="body-text svc-desc">Diseñamos el mapa completo antes de gastar un solo peso: objetivos, audiencias, embudos y mensajes con propósito medible.</p></div>
+      <div class="svc-card reveal d2"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2l2-2-5-5-2 4z" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linejoin="round"/><circle cx="17" cy="7" r="1.5" fill="var(--palette-blue-600)"/></svg></span><p class="heading-6">Creación de Campañas</p><p class="body-text svc-desc">Configuración técnica impecable: estructura de campañas, conjuntos, creatividades y copys orientados a conversión real.</p></div>
+      <div class="svc-card reveal d3"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><line x1="18" y1="20" x2="18" y2="10" stroke="var(--palette-blue-600)" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="20" x2="12" y2="4" stroke="var(--palette-blue-600)" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="20" x2="6" y2="14" stroke="var(--palette-blue-600)" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="20" x2="22" y2="20" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/></svg></span><p class="heading-6">Análisis de Métricas</p><p class="body-text svc-desc">CTR, CPM, CPA, ROAS — interpretamos los datos con claridad para invertir solo en lo que funciona.</p></div>
+      <div class="svc-card reveal d4"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linejoin="round"/></svg></span><p class="heading-6">Optimización y Seguimiento</p><p class="body-text svc-desc">Ajustes continuos de segmentación, pujas y creatividades. Las campañas mejoran semana a semana.</p></div>
+      <div class="svc-card reveal d5"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="var(--palette-blue-600)" stroke-width="1.5"/><line x1="9" y1="8" x2="15" y2="8" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="12" x2="15" y2="12" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/><line x1="9" y1="16" x2="12" y2="16" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/></svg></span><p class="heading-6">Reporte Semanal y Mensual</p><p class="body-text svc-desc">Transparencia total: resultados claros, qué se ajustó y el plan a seguir. Sin letra pequeña.</p></div>
+      <div class="svc-card reveal d6"><span class="svc-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><polyline points="17,1 21,5 17,9" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 11V9a4 4 0 014-4h14" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/><polyline points="7,23 3,19 7,15" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 13v2a4 4 0 01-4 4H3" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/></svg></span><p class="heading-6">Comunicación Constante</p><p class="body-text svc-desc">Canal directo activo para responder, ajustar y escalar cuando los números lo pidan.</p></div>
     </div>
   </div>
 </section>
@@ -713,13 +834,13 @@
     </div>
     <div class="rec-grid">
       <div class="rec-card filled reveal d1">
-        <span class="rec-icon">⚡</span>
+        <span class="rec-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><polygon points="13,2 3,14 12,14 11,22 21,10 12,10" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linejoin="round" fill="rgba(255,255,255,0.15)"/></svg></span>
         <span class="rec-badge">Indispensable</span>
-        <p class="heading-5" style="margin-bottom:var(--space-md);">Equipo Comercial Sólido</p>
+        <p class="heading-5" style="margin-bottom:var(--space-md);color:#f0f4ff;">Equipo Comercial Sólido</p>
         <p class="body-text">Los anuncios traen el tráfico, pero alguien tiene que cerrar. Un equipo bien entrenado puede multiplicar x2 o x3 los resultados de cualquier campaña bien estructurada.</p>
       </div>
       <div class="rec-card reveal d2">
-        <span class="rec-icon">🎨</span>
+        <span class="rec-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 110 20 4 4 0 01-4-4c0-1 .5-2 1.3-2.8" stroke="var(--palette-blue-600)" stroke-width="1.5" stroke-linecap="round"/><circle cx="8.5" cy="9" r="1.5" fill="var(--palette-blue-600)"/><circle cx="15.5" cy="9" r="1.5" fill="var(--palette-blue-600)"/><circle cx="17" cy="14" r="1.5" fill="var(--palette-blue-600)"/></svg></span>
         <span class="rec-badge">Crítico para el rendimiento</span>
         <p class="heading-5" style="margin-bottom:var(--space-md);">Contenido Constante y de Calidad</p>
         <p class="body-text">Las mejores campañas mueren con creatividades malas. Un flujo constante de contenido relevante y bien producido es el combustible de cualquier estrategia ganadora en Meta.</p>
@@ -784,8 +905,7 @@
     </ul></div>
     <div class="footer-col"><h4>Contacto</h4><ul>
       <li><a class="caption" href="#precios">Agendar sesión</a></li>
-      <li><a class="caption" href="#">Instagram</a></li>
-      <li><a class="caption" href="#">LinkedIn</a></li>
+      <li><a class="caption" href="https://wa.me/573005767237?text=Hola%2C+quiero+conocer+m%C3%A1s+sobre+Growth+Strategy" target="_blank" rel="noopener">WhatsApp</a></li>
     </ul></div>
   </div>
   <div class="footer-bottom">
@@ -794,46 +914,163 @@
 </footer>
 
 <script>
-/* ── DOT PARTICLES ── */
+/* ════════════════════════════════════════════════
+   ANTIGRAVITY-EXACT PARTICLE SYSTEM
+   + Meta ∞ logo formation on scroll
+════════════════════════════════════════════════ */
 const canvas=document.getElementById('dot-canvas'),ctx=canvas.getContext('2d');
 let W,H,dots=[];
 const COLORS=['#4285f4','#ea4335','#fbbc04','#34a853','#9c27b0','#00acc1','#ff7043','#66bb6a','#ab47bc','#26c6da','#ec407a','#7e57c2'];
 
+/* Generate Meta ∞ infinity target positions */
+function getMetaTargets(n, cx, cy, scale) {
+  const pts = [];
+  const total = n;
+  for(let i = 0; i < total; i++) {
+    const t = (i / total) * Math.PI * 2;
+    // Lemniscate of Bernoulli (infinity shape) — Meta logo approximation
+    const denom = 1 + Math.sin(t) * Math.sin(t);
+    const x = cx + scale * 1.4 * Math.cos(t) / denom;
+    const y = cy + scale * 0.7 * Math.sin(t) * Math.cos(t) / denom;
+    pts.push({x, y});
+  }
+  return pts;
+}
+
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+
 function initDots(){
   dots=[];
-  const n=Math.floor((W*H)/9000);
-  for(let i=0;i<n;i++)dots.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.6+0.5,color:COLORS[Math.floor(Math.random()*COLORS.length)],alpha:Math.random()*0.45+0.1,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3});
+  const n = Math.min(180, Math.floor((W*H)/8000));
+  const targets = getMetaTargets(n, W/2, H/2, Math.min(W,H)*0.22);
+  for(let i=0;i<n;i++){
+    const angle = Math.random()*Math.PI*2;
+    const rad   = Math.random()*Math.min(W,H)*0.5;
+    dots.push({
+      x: W/2 + Math.cos(angle)*rad,
+      y: H/2 + Math.sin(angle)*rad,
+      tx: targets[i].x,  // meta target x
+      ty: targets[i].y,  // meta target y
+      r: Math.random()*2.4+0.5,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      alpha: Math.random()*0.5+0.12,
+      vx: (Math.random()-.5)*.35,
+      vy: (Math.random()-.5)*.35,
+      ox: W/2 + Math.cos(angle)*rad,  // original x
+      oy: H/2 + Math.sin(angle)*rad,  // original y
+    });
+  }
 }
+
+let metaProgress = 0; // 0 = free float, 1 = full Meta logo
+
 function draw(){
   ctx.clearRect(0,0,W,H);
-  for(let i=0;i<dots.length;i++)for(let j=i+1;j<dots.length;j++){
-    const dx=dots[i].x-dots[j].x,dy=dots[i].y-dots[j].y,d=Math.sqrt(dx*dx+dy*dy);
-    if(d<90){ctx.beginPath();ctx.strokeStyle='#9aa0a6';ctx.globalAlpha=(1-d/90)*.07;ctx.lineWidth=.6;ctx.moveTo(dots[i].x,dots[i].y);ctx.lineTo(dots[j].x,dots[j].y);ctx.stroke();}
-  }
-  const cX = window._cursorX||W/2, cY = window._cursorY||H/2;
-  dots.forEach(p=>{
-    // Subtle magnetic attraction toward cursor
-    const dx = cX - p.x, dy = cY - p.y;
-    const dist = Math.sqrt(dx*dx+dy*dy);
-    if(dist < 120) {
-      p.x += dx * 0.0015;
-      p.y += dy * 0.0015;
+
+  /* Faint connecting lines */
+  const lineThresh = 80 + metaProgress * 30;
+  for(let i=0;i<dots.length;i++){
+    for(let j=i+1;j<dots.length;j++){
+      const dx=dots[i].x-dots[j].x, dy=dots[i].y-dots[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<lineThresh){
+        ctx.beginPath();
+        ctx.strokeStyle='#9aa0a6';
+        ctx.globalAlpha=(1-d/lineThresh)*(0.06+metaProgress*0.08);
+        ctx.lineWidth=0.6;
+        ctx.moveTo(dots[i].x,dots[i].y);
+        ctx.lineTo(dots[j].x,dots[j].y);
+        ctx.stroke();
+      }
     }
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=p.alpha;ctx.fill();
+  }
+
+  const cX=window._cursorX||W/2, cY=window._cursorY||H/2;
+  const mp = metaProgress;
+
+  dots.forEach(p=>{
+    if(mp > 0.01) {
+      // Lerp toward meta target
+      const lerpSpeed = 0.04 * mp;
+      p.x += (p.tx - p.x) * lerpSpeed;
+      p.y += (p.ty - p.y) * lerpSpeed;
+    } else {
+      // Free float with cursor magnetism
+      const dx=cX-p.x, dy=cY-p.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<130){ p.x+=dx*0.0018; p.y+=dy*0.0018; }
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    }
+
+    const r = p.r * (1 + mp * 0.5);
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=p.color;
+    ctx.globalAlpha=p.alpha*(1+mp*0.3);
+    ctx.fill();
   });
-  ctx.globalAlpha=1;requestAnimationFrame(draw);
+
+  ctx.globalAlpha=1;
+  requestAnimationFrame(draw);
 }
+
 resize();initDots();draw();
-window.addEventListener('resize',()=>{resize();initDots();});
+window.addEventListener('resize',()=>{
+  resize();
+  initDots();
+});
+
+/* Scroll → meta formation trigger */
+(function(){
+  const metaSection = document.getElementById('meta');
+  window.addEventListener('scroll',()=>{
+    if(!metaSection) return;
+    const rect = metaSection.getBoundingClientRect();
+    const vH = window.innerHeight;
+    // Activate when meta section is in view center
+    const progress = 1 - (rect.top / vH);
+    metaProgress = Math.max(0, Math.min(1, (progress - 0.2) * 2));
+    if(metaProgress > 0.5) {
+      canvas.classList.add('meta-active');
+    } else {
+      canvas.classList.remove('meta-active');
+    }
+    // Show Meta logo overlay when fully formed
+    const overlay = document.getElementById('meta-overlay');
+    if(overlay) {
+      if(metaProgress > 0.85) {
+        overlay.style.opacity = ((metaProgress - 0.85) / 0.15).toString();
+        overlay.style.transform = 'translate(-50%,-50%) scale(1)';
+      } else {
+        overlay.style.opacity = '0';
+        overlay.style.transform = 'translate(-50%,-50%) scale(0.8)';
+      }
+    }
+    // Update target center to be center of viewport  
+    if(metaProgress > 0.01) {
+      const targets = getMetaTargets(dots.length, W/2, H/2, Math.min(W,H)*0.22);
+      dots.forEach((p,i) => { if(targets[i]){p.tx=targets[i].x; p.ty=targets[i].y;} });
+    }
+  },{passive:true});
+})();
 
 /* ── DRAWER ── */
 const hamburger=document.getElementById('hamburger'),drawer=document.getElementById('drawer'),overlay=document.getElementById('overlay');
 function toggleDrawer(){const o=drawer.classList.toggle('open');hamburger.classList.toggle('open',o);overlay.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
 function closeDrawer(){drawer.classList.remove('open');hamburger.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
 overlay.addEventListener('click',closeDrawer);
+
+/* ── NAV SCROLLED STATE ── */
+const siteNav = document.querySelector('.site-nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if(y > 40) siteNav.classList.add('scrolled');
+  else siteNav.classList.remove('scrolled');
+  lastScroll = y;
+}, {passive:true});
 
 /* ── SCROLL REVEAL ── */
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');});},{threshold:.1});
@@ -938,29 +1175,7 @@ document.querySelectorAll('.reveal, .section-reveal').forEach(el => revealObs.ob
   }, { passive:true });
 })();
 
-/* ═══════════════════════════════════════════
-   HERO FLOATING DECORATIVE ELEMENTS
-═══════════════════════════════════════════ */
-(function(){
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
-  const labels = ['Meta Ads', 'ROAS', 'CTR', 'CPM', 'CPA', 'Retargeting', 'Strategy'];
-  const positions = [
-    {top:'18%',left:'7%'}, {top:'22%',right:'6%'},
-    {top:'72%',left:'5%'}, {top:'78%',right:'8%'},
-    {top:'44%',left:'3%'}, {top:'38%',right:'4%'},
-  ];
-  positions.forEach((pos, i) => {
-    const el = document.createElement('div');
-    el.className = 'hero-float';
-    el.textContent = labels[i] || '';
-    Object.assign(el.style, pos);
-    el.style.opacity = '0';
-    el.style.transition = 'opacity 1s ease ' + (0.8 + i * 0.15) + 's';
-    hero.appendChild(el);
-    setTimeout(() => { el.style.opacity = '1'; }, 100);
-  });
-})();
+/* hero floats: removed */
 
 </script>
 </body>
