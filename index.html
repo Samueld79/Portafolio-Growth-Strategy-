@@ -470,22 +470,7 @@
      + magnetic cursor particles
   ══════════════════════════════════════════ */
 
-  /* Word-by-word hero title split */
-  .hero-title .word {
-    display:inline-block;
-    overflow:hidden;
-    vertical-align:top;
-  }
-  .hero-title .word span {
-    display:inline-block;
-    transform:translateY(110%);
-    opacity:0;
-    transition:transform 0.7s cubic-bezier(.23,1,.32,1), opacity 0.5s ease;
-  }
-  .hero-title.revealed .word span {
-    transform:translateY(0);
-    opacity:1;
-  }
+
 
   /* Parallax hero bg */
   .hero-parallax {
@@ -575,9 +560,7 @@
 
 
   /* Meta formation glow on canvas */
-  #dot-canvas.meta-active {
-    filter: drop-shadow(0 0 24px rgba(50,121,249,0.18));
-  }
+
 
 
   /* ── HERO LOGO ANIMATED ── */
@@ -620,43 +603,7 @@
 <body>
 
 <canvas id="dot-canvas"></canvas>
-<!-- Meta logo overlay — appears after particle formation -->
-<div id="meta-overlay" style="
-  position:fixed;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(0.6);
-  opacity:0;
-  pointer-events:none;
-  z-index:1;
-  transition:opacity 0.6s ease, transform 0.6s cubic-bezier(.23,1,.32,1);
-">
-  <svg width="180" height="100" viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Meta ∞ logo — lemniscate shape, blue gradient -->
-    <defs>
-      <linearGradient id="metaGrad" x1="0" y1="0" x2="180" y2="0" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="#0082FB"/>
-        <stop offset="50%" stop-color="#0099FF"/>
-        <stop offset="100%" stop-color="#0082FB"/>
-      </linearGradient>
-      <filter id="metaGlow">
-        <feGaussianBlur stdDeviation="3" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-    <path d="
-      M 45 50
-      C 45 28, 70 18, 90 50
-      C 110 82, 135 72, 135 50
-      C 135 28, 110 18, 90 50
-      C 70 82, 45 72, 45 50
-      Z
-    " stroke="url(#metaGrad)" stroke-width="10" fill="none"
-      stroke-linecap="round" stroke-linejoin="round"
-      filter="url(#metaGlow)"
-    />
-  </svg>
-  <p style="text-align:center;font-family:'Google Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#0082FB;margin-top:8px;opacity:0.7;">Meta Ads</p>
-</div>
+
 <div class="overlay" id="overlay"></div>
 
 <!-- DRAWER -->
@@ -920,7 +867,7 @@
 ════════════════════════════════════════════════ */
 const canvas=document.getElementById('dot-canvas'),ctx=canvas.getContext('2d');
 let W,H,dots=[];
-const COLORS=['#4285f4','#ea4335','#fbbc04','#34a853','#9c27b0','#00acc1','#ff7043','#66bb6a','#ab47bc','#26c6da','#ec407a','#7e57c2'];
+const COLORS=['#121317','#2F3034','#45474D','#6a6d75','#9aa0a6','#B2BBC5','#CDD4DC','#1a1a1a','#333333','#555555','#777777','#999999'];
 
 /* Generate Meta ∞ infinity target positions */
 function getMetaTargets(n, cx, cy, scale) {
@@ -953,7 +900,7 @@ function initDots(){
       ty: targets[i].y,  // meta target y
       r: Math.random()*2.4+0.5,
       color: COLORS[Math.floor(Math.random()*COLORS.length)],
-      alpha: Math.random()*0.5+0.12,
+      alpha: Math.random()*0.35+0.08,
       vx: (Math.random()-.5)*.35,
       vy: (Math.random()-.5)*.35,
       ox: W/2 + Math.cos(angle)*rad,  // original x
@@ -975,7 +922,7 @@ function draw(){
       const d=Math.sqrt(dx*dx+dy*dy);
       if(d<lineThresh){
         ctx.beginPath();
-        ctx.strokeStyle='#9aa0a6';
+        ctx.strokeStyle='rgba(33,34,38,0.3)';
         ctx.globalAlpha=(1-d/lineThresh)*(0.06+metaProgress*0.08);
         ctx.lineWidth=0.6;
         ctx.moveTo(dots[i].x,dots[i].y);
@@ -1037,17 +984,6 @@ window.addEventListener('resize',()=>{
     } else {
       canvas.classList.remove('meta-active');
     }
-    // Show Meta logo overlay when fully formed
-    const overlay = document.getElementById('meta-overlay');
-    if(overlay) {
-      if(metaProgress > 0.85) {
-        overlay.style.opacity = ((metaProgress - 0.85) / 0.15).toString();
-        overlay.style.transform = 'translate(-50%,-50%) scale(1)';
-      } else {
-        overlay.style.opacity = '0';
-        overlay.style.transform = 'translate(-50%,-50%) scale(0.8)';
-      }
-    }
     // Update target center to be center of viewport  
     if(metaProgress > 0.01) {
       const targets = getMetaTargets(dots.length, W/2, H/2, Math.min(W,H)*0.22);
@@ -1104,42 +1040,18 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ═══════════════════════════════════════════
-   HERO TITLE — word split reveal (Apple-style)
+   HERO TITLE — fade-up reveal (clean, no regex)
 ═══════════════════════════════════════════ */
 (function() {
   const title = document.querySelector('.hero-title');
   if (!title) return;
-  // Get the full text, preserving structure — wrap each word in .word > span
-  const rawHTML = title.innerHTML;
-  // Split text nodes by space, keeping HTML tags intact
-  function wrapWords(html) {
-    // Replace text nodes with wrapped words
-    return html.replace(/([^<>\s][^<>]*?)(?=<|$)/g, (match) => {
-      return match.split(' ').map(w => {
-        if (!w.trim()) return ' ';
-        return `<span class="word"><span>${w}</span></span>`;
-      }).join(' ');
-    });
-  }
-  // Simpler approach: just wrap the whole text content
-  const words = title.innerText.split(/\s+/).filter(Boolean);
-  // Keep the <br> structure  
-  const lines = title.innerHTML.split('<br/>');
-  title.innerHTML = lines.map(line => {
-    return line.replace(/<[^>]+>|[^<\s]+/g, token => {
-      if (token.startsWith('<')) return token;
-      if (!token.trim()) return token;
-      return `<span class="word"><span>${token}</span></span>`;
-    });
-  }).join('<br/>');
-
-  // Stagger delays
-  title.querySelectorAll('.word span').forEach((s, i) => {
-    s.style.transitionDelay = (0.05 * i) + 's';
-  });
-
-  // Trigger after short delay
-  setTimeout(() => { title.classList.add('revealed'); }, 200);
+  title.style.opacity = '0';
+  title.style.transform = 'translateY(24px)';
+  title.style.transition = 'opacity 0.8s cubic-bezier(.23,1,.32,1) 0.2s, transform 0.8s cubic-bezier(.23,1,.32,1) 0.2s';
+  setTimeout(function() {
+    title.style.opacity = '1';
+    title.style.transform = 'translateY(0)';
+  }, 50);
 })();
 
 /* ═══════════════════════════════════════════
