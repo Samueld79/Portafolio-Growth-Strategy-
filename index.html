@@ -639,86 +639,113 @@
     font-weight:450;
   }
 
-  /* ── DASHBOARD REDESIGN ── */
-  #resultados { background: var(--palette-grey-1200); }
-  #resultados .eyebrow { color: rgba(50,121,249,0.85); }
-  #resultados .heading-3 { color: var(--palette-grey-0); }
-  #resultados .body-text  { color: var(--palette-grey-300); }
-  #resultados .caption    { color: var(--palette-grey-300); }
-
-  .dashboard-grid {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:1px;
-    background: rgba(255,255,255,0.06);
-    border-radius: var(--shape-corner-xl);
+  /* ── DASHBOARD — minimal dark ── */
+  .dash-section-wrap {
+    background: #0d0f14;
+    border-radius: 28px;
+    padding: var(--space-6xl) var(--space-6xl) var(--space-4xl);
+    margin: 0 auto;
+    max-width: 1100px;
+    position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.07);
   }
-  .dash-card {
-    background: rgba(255,255,255,0.03);
-    padding: var(--space-2xl) var(--space-xl);
-    position: relative; overflow: hidden;
-    transition: background 0.25s;
+  .dash-section-wrap::before {
+    content:'';
+    position:absolute;top:0;left:10%;right:10%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(50,121,249,0.4),transparent);
   }
-  .dash-card:hover { background: rgba(255,255,255,0.06); }
-  .dash-card::after {
-    content:'';position:absolute;bottom:0;left:var(--space-xl);right:var(--space-xl);
-    height:1px;background:rgba(255,255,255,0.05);
+  .dash-section-wrap .eyebrow { color: rgba(50,121,249,0.7); }
+  .dash-section-wrap h2       { color: #f0f4ff; }
+  .dash-section-wrap p        { color: rgba(178,187,197,0.6); }
+
+  /* 4 metric items in a row — no card borders, just spaced numbers */
+  .dash-metrics {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 0;
+    margin-top: var(--space-4xl);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    overflow: hidden;
   }
-  .dash-icon {
-    width:36px;height:36px;border-radius:10px;
-    background:rgba(50,121,249,0.15);
-    border:1px solid rgba(50,121,249,0.25);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:var(--space-lg);
+  .dash-metric {
+    padding: var(--space-2xl) var(--space-xl) var(--space-xl);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    transition: background 0.2s;
   }
-  .dash-icon svg path, .dash-icon svg line, .dash-icon svg rect,
-  .dash-icon svg circle, .dash-icon svg polyline {
-    stroke: rgba(147,197,253,0.9) !important;
+  .dash-metric:last-child { border-right: none; }
+  .dash-metric:hover { background: rgba(255,255,255,0.03); }
+
+  /* Tiny colored dot indicator */
+  .dash-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--palette-blue-600);
+    margin-bottom: var(--space-lg);
+    box-shadow: 0 0 8px rgba(50,121,249,0.5);
   }
-  .dash-label {
-    font-size: var(--xs-size);
-    letter-spacing: .12em;
+  .dash-metric:nth-child(2) .dash-dot { background: #34a853; box-shadow: 0 0 8px rgba(52,168,83,0.5); }
+  .dash-metric:nth-child(3) .dash-dot { background: #fbbc04; box-shadow: 0 0 8px rgba(251,188,4,0.5); }
+  .dash-metric:nth-child(4) .dash-dot { background: #9c27b0; box-shadow: 0 0 8px rgba(156,39,176,0.5); }
+
+  .dash-metric-label {
+    font-size: 11px;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    font-weight: 450;
-    color: rgba(178,187,197,0.7);
-    margin-bottom: var(--space-md);
+    font-weight: 500;
+    color: rgba(155,165,180,0.6);
+    margin-bottom: var(--space-sm);
+    display: block;
   }
-  .dash-value {
-    font-size: var(--5xl-size);
+  .dash-metric-value {
+    font-size: clamp(2rem, 3.5vw, var(--5xl-size));
     font-weight: 450;
     letter-spacing: -.04em;
-    color: var(--palette-grey-0);
+    color: #f0f4ff;
     line-height: 1;
-    margin-bottom: var(--space-sm);
-    min-height: 1.1em;
+    margin-bottom: var(--space-xs);
     font-variant-numeric: tabular-nums;
+    min-height: 1.1em;
   }
-  .dash-sub { font-size: var(--xs-size); color: rgba(178,187,197,0.55); line-height:1.5; }
-  .dash-value:not(.loaded) { opacity: 0.25; }
-  .dash-value.loaded {
+  .dash-metric-value:not(.loaded) { opacity: 0.2; }
+  .dash-metric-value.loaded {
     opacity: 1;
-    animation: countIn 0.5s cubic-bezier(.23,1,.32,1) forwards;
+    animation: slideUp 0.6s cubic-bezier(.23,1,.32,1) forwards;
   }
-  @keyframes countIn {
-    from { opacity:0; transform:translateY(8px); }
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(12px); }
     to   { opacity:1; transform:translateY(0); }
   }
-
-  @media(max-width:1024px) {
-    .dashboard-grid { grid-template-columns:repeat(2,1fr); }
-  }
-  @media(max-width:767px) {
-    .dashboard-grid { grid-template-columns:1fr 1fr; }
-    .dash-value { font-size:var(--4xl-size); }
-    .dash-card  { padding:var(--space-xl) var(--space-lg); }
+  .dash-metric-sub {
+    font-size: var(--xs-size);
+    color: rgba(155,165,180,0.4);
   }
 
+  /* Timestamp bar */
+  .dash-timestamp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xl);
+    font-size: var(--xs-size);
+    color: rgba(155,165,180,0.35);
+  }
+  .dash-timestamp .live-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #34a853;
+    box-shadow: 0 0 6px rgba(52,168,83,0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; } 50% { opacity:0.3; }
+  }
 
-  .dash-value { transition: opacity 0.4s ease; }
-  .dash-value:not(.loaded) { opacity: 0.3; }
-  .dash-value.loaded { opacity: 1; }
+  @media(max-width:1024px) { .dash-metrics { grid-template-columns:repeat(2,1fr); } .dash-section-wrap { padding: var(--space-4xl) var(--space-2xl); } }
+  @media(max-width:767px)  { .dash-metrics { grid-template-columns:1fr 1fr; } .dash-section-wrap { padding: var(--space-2xl) var(--space-lg); border-radius:20px; } }
+
+
+
 
   </style>
 </head>
@@ -826,51 +853,53 @@
 <hr class="divider-line"/>
 
 <!-- DASHBOARD RESULTADOS EN VIVO -->
-<section class="section-pad" id="resultados" style="background:var(--palette-grey-1200);border-radius:var(--shape-corner-2xl);margin:0 var(--page-margin) var(--space-6xl);overflow:hidden;">
+<section class="section-pad" id="resultados" style="padding-top:0;">
   <div class="container">
-    <span class="eyebrow reveal" style="text-align:center;display:block;">Resultados en tiempo real</span>
-    <h2 class="heading-3 reveal" style="text-align:center;margin-bottom:var(--space-sm);">Lo que generamos<br/>para nuestros clientes</h2>
-    <p class="body-text reveal" style="text-align:center;max-width:480px;margin:0 auto var(--space-4xl);">Datos acumulados del año 2026 de todas las empresas que gestionamos actualmente.</p>
+    <div class="dash-section-wrap reveal">
 
-    <div class="dashboard-grid reveal">
-      <div class="dash-card">
-        <div class="dash-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><line x1="12" y1="1" x2="12" y2="23" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="eyebrow" style="text-align:center;display:block;margin-bottom:var(--space-md);">Resultados en tiempo real</span>
+      <h2 class="heading-3" style="text-align:center;margin-bottom:var(--space-sm);">Lo que generamos<br/>para nuestros clientes</h2>
+      <p style="text-align:center;max-width:420px;margin:0 auto;font-size:var(--sm-size);color:rgba(178,187,197,0.6);">
+        Datos acumulados 2026 · Todas las empresas que gestionamos
+      </p>
+
+      <div class="dash-metrics">
+        <!-- Inversión -->
+        <div class="dash-metric">
+          <div class="dash-dot"></div>
+          <span class="dash-metric-label">Inversión en pauta</span>
+          <p class="dash-metric-value" id="dash-inversion">—</p>
+          <span class="dash-metric-sub">Presupuesto gestionado</span>
         </div>
-        <p class="dash-label">Inversión Total</p>
-        <p class="dash-value" id="dash-inversion">—</p>
-        <p class="dash-sub">Presupuesto gestionado 2026</p>
-      </div>
-      <div class="dash-card">
-        <div class="dash-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#3279F9" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <!-- Mensajes -->
+        <div class="dash-metric">
+          <div class="dash-dot"></div>
+          <span class="dash-metric-label">Mensajes generados</span>
+          <p class="dash-metric-value" id="dash-mensajes">—</p>
+          <span class="dash-metric-sub">Vía Meta Ads</span>
         </div>
-        <p class="dash-label">Mensajes Generados</p>
-        <p class="dash-value" id="dash-mensajes">—</p>
-        <p class="dash-sub">Contactos directos con clientes</p>
-      </div>
-      <div class="dash-card">
-        <div class="dash-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#3279F9" stroke-width="1.5" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="#3279F9" stroke-width="1.5"/><path d="M16 10a4 4 0 01-8 0" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <!-- Ventas -->
+        <div class="dash-metric">
+          <div class="dash-dot"></div>
+          <span class="dash-metric-label">Ventas reportadas</span>
+          <p class="dash-metric-value" id="dash-ventas">—</p>
+          <span class="dash-metric-sub">Cerradas por los clientes</span>
         </div>
-        <p class="dash-label">Ventas Reportadas</p>
-        <p class="dash-value" id="dash-ventas">—</p>
-        <p class="dash-sub">Ventas cerradas reportadas</p>
-      </div>
-      <div class="dash-card">
-        <div class="dash-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#3279F9" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="#3279F9" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <!-- Clientes -->
+        <div class="dash-metric">
+          <div class="dash-dot"></div>
+          <span class="dash-metric-label">Clientes activos</span>
+          <p class="dash-metric-value" id="dash-reach">—</p>
+          <span class="dash-metric-sub">Empresas gestionadas</span>
         </div>
-        <p class="dash-label">Alcance (Reach)</p>
-        <p class="dash-value" id="dash-reach">4.8M</p>
-        <p class="dash-sub">Personas únicas alcanzadas</p>
       </div>
+
+      <div class="dash-timestamp">
+        <span class="live-dot"></span>
+        <span id="dash-update-time">Conectando...</span>
+      </div>
+
     </div>
-
-    <p class="caption" style="text-align:center;margin-top:var(--space-xl);color:var(--theme-surface-on-surface-variant);">
-      <span id="dash-update-time">Actualizando...</span> · 
-      <a href="https://js-analytics-dashboard.vercel.app" target="_blank" rel="noopener" style="color:var(--palette-blue-600);">Ver dashboard completo →</a>
-    </p>
   </div>
 </section>
 
