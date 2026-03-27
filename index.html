@@ -747,6 +747,112 @@
 
 
 
+
+  /* ── LIVE METRICS ROW — integrated in nosotros ── */
+  .live-metrics-row {
+    border: 1px solid var(--divider);
+    border-radius: var(--shape-corner-xl);
+    overflow: hidden;
+    background: var(--theme-surface-surface-container);
+  }
+  .lm-header {
+    padding: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+  .lm-live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #34a853;
+    background: rgba(52,168,83,0.08);
+    border: 1px solid rgba(52,168,83,0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .lm-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #34a853;
+    box-shadow: 0 0 5px rgba(52,168,83,0.6);
+    animation: lmPulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+  @keyframes lmPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .lm-title {
+    font-size: var(--sm-size);
+    color: var(--theme-surface-on-surface-variant);
+    font-weight: 400;
+    margin: 0;
+  }
+  .lm-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+  }
+  .lm-sep {
+    width: 1px;
+    height: 60px;
+    background: var(--divider);
+  }
+  .lm-item {
+    padding: var(--space-2xl) var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lm-label {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--theme-surface-on-surface-variant);
+  }
+  .lm-value {
+    font-size: var(--4xl-size);
+    font-weight: 450;
+    letter-spacing: -.04em;
+    color: var(--theme-surface-on-surface);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    min-height: 1em;
+    transition: opacity 0.4s;
+  }
+  .lm-value:not(.loaded) { opacity: 0.2; }
+  .lm-value.loaded {
+    opacity: 1;
+    animation: lmIn 0.55s cubic-bezier(.23,1,.32,1) forwards;
+  }
+  @keyframes lmIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .lm-sub {
+    font-size: var(--xs-size);
+    color: rgba(var(--palette-grey-1000-rgb), 0.35);
+  }
+  .lm-time {
+    padding: var(--space-md) var(--space-2xl);
+    border-top: 1px solid var(--divider);
+    font-size: var(--xs-size);
+    color: var(--theme-surface-on-surface-variant);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+  }
+  @media(max-width:767px) {
+    .lm-grid { grid-template-columns: 1fr; }
+    .lm-sep  { width:100%; height:1px; }
+    .lm-item { padding: var(--space-lg) var(--space-xl); }
+    .lm-value{ font-size: var(--3xl-size); }
+    .lm-header { flex-direction: column; align-items: flex-start; gap: var(--space-sm); }
+  }
+
   </style>
 </head>
 <body>
@@ -814,52 +920,6 @@
 <hr class="divider-line"/>
 
 <!-- DASHBOARD RESULTADOS EN VIVO -->
-<section class="section-pad" id="resultados" style="padding-top:0;">
-  <div class="container">
-    <div class="dash-section-wrap reveal">
-
-      <span class="eyebrow" style="text-align:center;display:block;margin-bottom:var(--space-md);">Resultados en tiempo real</span>
-      <h2 class="heading-3" style="text-align:center;margin-bottom:var(--space-sm);">Lo que generamos<br/>para nuestros clientes</h2>
-      <p style="text-align:center;max-width:420px;margin:0 auto;font-size:var(--sm-size);color:rgba(178,187,197,0.6);">
-        Datos acumulados 2026 · Todas las empresas que gestionamos
-      </p>
-
-      <div class="dash-metrics">
-        <!-- Inversión -->
-        <div class="dash-metric">
-          <div class="dash-dot"></div>
-          <span class="dash-metric-label">Inversión en pauta</span>
-          <p class="dash-metric-value" id="dash-inversion">—</p>
-          <span class="dash-metric-sub">Presupuesto gestionado</span>
-        </div>
-        <!-- Mensajes -->
-        <div class="dash-metric">
-          <div class="dash-dot"></div>
-          <span class="dash-metric-label">Mensajes generados</span>
-          <p class="dash-metric-value" id="dash-mensajes">—</p>
-          <span class="dash-metric-sub">Vía Meta Ads</span>
-        </div>
-        <!-- Ventas -->
-        <div class="dash-metric">
-          <div class="dash-dot"></div>
-          <span class="dash-metric-label">Ventas reportadas</span>
-          <p class="dash-metric-value" id="dash-ventas">—</p>
-          <span class="dash-metric-sub">Cerradas por los clientes</span>
-        </div>
-
-      </div>
-
-      <div class="dash-timestamp">
-        <span class="live-dot"></span>
-        <span id="dash-update-time">Conectando...</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<hr class="divider-line"/>
-
 <!-- NOSOTROS -->
 <section class="section-pad" id="nosotros">
   <div class="container">
@@ -1324,7 +1384,7 @@ document.querySelectorAll('.reveal, .section-reveal').forEach(el => revealObs.ob
 
   function set(id, val) {
     const el = document.getElementById(id);
-    if (el) { el.textContent = val; el.classList.add('loaded'); }
+    if (el) { el.textContent = val; el.classList.add('loaded'); el.classList.remove('lm-value'); el.classList.add('lm-value'); }
   }
   function updateTime(ok) {
     const el = document.getElementById('dash-update-time');
@@ -1368,7 +1428,7 @@ document.querySelectorAll('.reveal, .section-reveal').forEach(el => revealObs.ob
   const dashObs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { loadDashboard(); dashObs.unobserve(e.target); } });
   }, { threshold: 0.2 });
-  const dashSec = document.getElementById('resultados');
+  const dashSec = document.getElementById('nosotros');
   if (dashSec) dashObs.observe(dashSec);
 
   // Refresh every 5 minutes
