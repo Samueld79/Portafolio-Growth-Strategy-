@@ -1103,20 +1103,20 @@
 .hp{position:absolute;left:-9999px;opacity:0}
 .live[hidden]{display:none}
 .logos-track{animation-duration:42s!important}
-.ticker{display:flex;align-items:stretch;border-block:1px solid var(--theme-outline-variant);background:#f6f8fc;position:fixed;left:0;right:0;top:var(--nav-height);z-index:90;height:var(--tk-h);overflow:hidden}
-:root{--tk-h:46px}
+.ticker{display:flex;flex-direction:column;border-block:1px solid var(--theme-outline-variant);background:#f6f8fc;position:fixed;left:0;right:0;top:var(--nav-height);z-index:90;height:var(--tk-h);overflow:hidden}
+:root{--tk-h:58px}
 body.has-ticker{padding-top:var(--tk-h)}
-.tk-badge{flex:none;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:#1e8e3e;background:#f6f8fc;border-right:1px solid var(--theme-outline-variant);z-index:1}
-.tk-view{overflow:hidden;flex:1}
-.tk-track{display:flex;width:max-content;animation:tk 38s linear infinite}
+.tk-view{overflow:hidden;flex:1 1 auto;display:flex;align-items:center;min-height:0}
+.tk-track{display:flex;align-items:center;width:max-content;animation:tk 38s linear infinite}
 .tk-view:hover .tk-track{animation-play-state:paused}
-.tk-item{display:flex;align-items:center;gap:10px;padding:0 30px;border-right:1px solid var(--theme-outline-variant);white-space:nowrap}
+.tk-badge{flex:none;order:2;display:flex;align-items:center;justify-content:center;gap:7px;height:20px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:#1e8e3e}
+.tk-item{display:flex;align-items:center;gap:10px;padding:0 30px;border-right:1px solid var(--theme-outline-variant);white-space:nowrap;line-height:1}
 .tk-item span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--theme-surface-on-surface-variant)}
 .tk-item b{font-size:17px;font-weight:500;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .tk-item i{font-style:normal;color:#1e8e3e;font-size:13px}
 @keyframes tk{to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.tk-track{animation:none}.tk-view{overflow-x:auto}}
-@media(max-width:600px){.tk-badge{padding:0 12px;font-size:10px}.tk-item{padding:0 20px}.tk-item b{font-size:15px}.tk-item span{font-size:10px}}
+@media(max-width:600px){.tk-item{padding:0 20px;gap:8px}.tk-item b{font-size:16px}.tk-item span{font-size:10px}}
 
 /* v2: orden y claridad */
 .nav-cta{display:inline-flex!important;padding:7px 16px;font-size:13.5px}
