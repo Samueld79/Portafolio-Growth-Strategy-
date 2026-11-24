@@ -1102,6 +1102,18 @@
 .wa-float:hover{transform:scale(1.07)}
 .hp{position:absolute;left:-9999px;opacity:0}
 .live[hidden]{display:none}
+.ticker{display:flex;align-items:stretch;border-block:1px solid var(--theme-outline-variant);background:var(--theme-surface-surface-container);margin:calc(var(--space-4xl)*-1) 0 var(--space-3xl);overflow:hidden}
+.tk-badge{flex:none;display:flex;align-items:center;gap:8px;padding:0 18px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:#1e8e3e;background:var(--theme-surface-surface-container);border-right:1px solid var(--theme-outline-variant);z-index:1}
+.tk-view{overflow:hidden;flex:1}
+.tk-track{display:flex;width:max-content;animation:tk 38s linear infinite}
+.tk-view:hover .tk-track{animation-play-state:paused}
+.tk-item{display:flex;align-items:baseline;gap:10px;padding:16px 34px;border-right:1px solid var(--theme-outline-variant);white-space:nowrap}
+.tk-item span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--theme-surface-on-surface-variant)}
+.tk-item b{font-size:20px;font-weight:500;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.tk-item i{font-style:normal;color:#1e8e3e;font-size:13px}
+@keyframes tk{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.tk-track{animation:none}.tk-view{overflow-x:auto}}
+@media(max-width:600px){.tk-badge{padding:0 12px;font-size:10px}.tk-item{padding:14px 22px}.tk-item b{font-size:17px}}
 
 /* v2: orden y claridad */
 .nav-cta{display:inline-flex!important;padding:7px 16px;font-size:13.5px}

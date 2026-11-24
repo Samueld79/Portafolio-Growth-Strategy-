@@ -49,11 +49,11 @@ if(live && C.SUMMARY_URL){
   .then(function(r){if(!r.ok)throw 0;return r.json();})
   .then(function(d){
     if(!d||!d.inversion_total||!d.mensajes_total)throw 0;
-    var fl=function(v,k){return (Math.floor(v/k*10)/10).toLocaleString('es-CO',{maximumFractionDigits:1});};
-    document.getElementById('dash-inversion').textContent='$'+fl(d.inversion_total,1e6)+'M';
-    document.getElementById('dash-mensajes').textContent=Number(d.mensajes_total).toLocaleString('es-CO');
-    document.getElementById('dash-ventas').textContent=d.ventas_total?'$'+Math.floor(d.ventas_total/1e6).toLocaleString('es-CO')+'M':'—';
-    document.getElementById('dash-update-time').textContent='Actualizado '+new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+    var n=function(v){return Math.floor(Number(v)).toLocaleString('es-CO');};
+    var items=[['Inversión en pauta gestionada','$'+n(d.inversion_total)],['Mensajes generados vía Meta Ads',n(d.mensajes_total)]];
+    if(d.ventas_total)items.push(['Ventas reportadas por los clientes','$'+n(d.ventas_total)]);
+    var one=items.map(function(it){return '<div class="tk-item"><span>'+it[0]+'</span><b>'+it[1]+'</b><i>▲</i></div>';}).join('');
+    document.getElementById('tk-track').innerHTML=one+one+one+one;
     live.hidden=false;
   }).catch(function(){});
 }
