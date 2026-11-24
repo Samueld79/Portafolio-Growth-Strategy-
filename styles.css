@@ -1102,6 +1102,7 @@
 .wa-float:hover{transform:scale(1.07)}
 .hp{position:absolute;left:-9999px;opacity:0}
 .live[hidden]{display:none}
+.logos-track{animation-duration:42s!important}
 .ticker{display:flex;align-items:stretch;border-block:1px solid var(--theme-outline-variant);background:#f6f8fc;position:fixed;left:0;right:0;top:var(--nav-height);z-index:90;height:var(--tk-h);overflow:hidden}
 :root{--tk-h:46px}
 body.has-ticker{padding-top:var(--tk-h)}
