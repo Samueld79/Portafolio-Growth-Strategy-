@@ -31,7 +31,7 @@ var nav=document.querySelector('.site-nav');
 addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>40);},{passive:true});
 var els=document.querySelectorAll('.reveal');
 if('IntersectionObserver' in window){var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.08});els.forEach(function(el){obs.observe(el);});}else{els.forEach(function(el){el.classList.add('in');});}
-document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();var y=t.getBoundingClientRect().top+scrollY-nav.offsetHeight;scrollTo({top:y,behavior:'smooth'});}});});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();var y=t.getBoundingClientRect().top+scrollY-nav.offsetHeight-(live&&!live.hidden?46:0);scrollTo({top:y,behavior:'smooth'});}});});
 var bar=document.createElement('div');bar.className='scroll-progress';document.body.prepend(bar);
 addEventListener('scroll',function(){var m=document.body.scrollHeight-innerHeight;bar.style.width=(m>0?scrollY/m*100:0)+'%';},{passive:true});
 
@@ -54,7 +54,7 @@ if(live && C.SUMMARY_URL){
     if(d.ventas_total)items.push(['Ventas reportadas por los clientes','$'+n(d.ventas_total)]);
     var one=items.map(function(it){return '<div class="tk-item"><span>'+it[0]+'</span><b>'+it[1]+'</b><i>▲</i></div>';}).join('');
     document.getElementById('tk-track').innerHTML=one+one+one+one;
-    live.hidden=false;
+    live.hidden=false; document.body.classList.add('has-ticker');
   }).catch(function(){});
 }
 
@@ -62,7 +62,7 @@ if(live && C.SUMMARY_URL){
 var sel=document.getElementById('f_interest');
 document.querySelectorAll('[data-pick]').forEach(function(b){b.addEventListener('click',function(e){
   var v=b.getAttribute('data-pick'); if(sel&&v){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===v){sel.selectedIndex=i;break;}}}
-  var t=document.getElementById('formulario'); if(t){e.preventDefault();scrollTo({top:t.getBoundingClientRect().top+scrollY-nav.offsetHeight,behavior:'smooth'});}
+  var t=document.getElementById('formulario'); if(t){e.preventDefault();scrollTo({top:t.getBoundingClientRect().top+scrollY-nav.offsetHeight-(live&&!live.hidden?46:0),behavior:'smooth'});}
 });});
 
 /* Formulario calificador */
