@@ -114,8 +114,13 @@ if(form){
       'Ref: '+ref;
     var btn=document.getElementById('submitbtn'); btn.disabled=true; btn.textContent='Enviando…';
     var done=function(){
-      track('Lead',{content_name:formSec.dataset.service,value:0,currency:'COP',lead_tier:tier});
-      document.getElementById('thanks-wa').href=waLink(msg);
+      var ev={content_name:formSec.dataset.service,value:0,currency:'COP',lead_tier:tier};
+      /* Calificación para Meta: A y B = Lead (cliente potencial); C = LeadFrio (evento aparte, no cuenta como Lead) */
+      if(tier==='C'){ if(window.fbq){try{fbq('trackCustom','LeadFrio',ev);}catch(e){}} } else { track('Lead',ev); }
+      var tw=document.getElementById('thanks-wa');
+      tw.href=waLink(msg);
+      /* Clic en "Abrir WhatsApp" después del formulario = Contact con el nivel del lead */
+      tw.addEventListener('click',function(){ track('Contact',{content_name:formSec.dataset.service,lead_tier:tier,source:'form'}); });
       document.getElementById('formwrap').classList.add('ok');
       document.getElementById('formwrap').scrollIntoView({behavior:'smooth',block:'center'});
     };
