@@ -80,14 +80,25 @@ if(form){
   }
   function label(selEl){return selEl.options[selEl.selectedIndex].text;}
   function setErr(el,bad){el.closest('.field').classList.toggle('err',bad);}
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(form.company_site.value)return; /* trampa de bots */
-    var ok=true, f=form.elements;
+  function v1(){var f=form.elements,ok=true;
     ['name','business','city'].forEach(function(k){var bad=f[k].value.trim().length<2;setErr(f[k],bad);if(bad)ok=false;});
     var digits=f.whatsapp.value.replace(/\D/g,''); if(digits.indexOf('57')===0&&digits.length===12)digits=digits.slice(2);
     var badw=digits.length!==10; setErr(f.whatsapp,badw); if(badw)ok=false;
+    return {ok:ok,digits:digits};}
+  function v2(){var f=form.elements,ok=true;
     ['sells','chats','budget','interest','start'].forEach(function(k){var bad=!f[k].value;setErr(f[k],bad);if(bad)ok=false;});
+    return ok;}
+  var s1=document.getElementById('step1'),s2=document.getElementById('step2'),p2=document.getElementById('p2'),pl=document.getElementById('plabel');
+  function go(n){s1.hidden=n!==1;s2.hidden=n!==2;p2.classList.toggle('on',n===2);pl.textContent=n===1?'Paso 1 de 2 · Tus datos':'Paso 2 de 2 · Tu necesidad';
+    var t=document.getElementById('formwrap');t.scrollIntoView({behavior:'smooth',block:'start'});}
+  document.getElementById('next1').addEventListener('click',function(){if(v1().ok){go(2);}else{var fe=form.querySelector('.err input');if(fe)fe.focus();}});
+  document.getElementById('back2').addEventListener('click',function(){go(1);});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.company_site.value)return; /* trampa de bots */
+    var f=form.elements, r1=v1(), digits=r1.digits, ok=r1.ok;
+    if(!ok){go(1);return;}
+    ok=v2();
     if(!ok){var first=form.querySelector('.err');if(first)first.scrollIntoView({behavior:'smooth',block:'center'});return;}
     var v={name:f.name.value.trim(),business:f.business.value.trim(),whatsapp:'57'+digits,sells:f.sells.value,city:f.city.value.trim(),chats:f.chats.value,budget:f.budget.value,interest:f.interest.value,start:f.start.value};
     var tier=score(v), u=utm(), ref='GS-'+tier+'-'+Math.floor(1000+Math.random()*9000);

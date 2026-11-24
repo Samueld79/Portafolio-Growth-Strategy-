@@ -1,6 +1,6 @@
 /* Configuración del sitio — edita aquí */
 window.GS = {
-  WHATSAPP: '573005767237',
+  WHATSAPP: '573235610505',
   PIXEL_ID: '1160857216283740',   // Píxel "Growth Strategy · Sitio web" (cuenta Growth Strategy)
   // Los leads se guardan en la tabla landing_leads (solo inserción pública). Vacío = solo se envían por WhatsApp.
   LEADS_URL: 'https://wwlnclellqcztrfizcpk.supabase.co/rest/v1/landing_leads',

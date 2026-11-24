@@ -44,7 +44,7 @@
     <a href="#formulario" class="btn-outlined cta">Cotizar ahora</a>
   </div>
 </section>
-<hr class="divider-line"/>
+<div class="strip"><div><b>Desde $590.000</b><span>pack de 5 videos</span></div><div><b>3 a 8 días hábiles</b><span>de entrega</span></div><div><b>4 formatos</b><span>9:16 · 1:1 · 4:5 · 16:9</span></div></div><hr class="divider-line"/>
 <section class="section-pad" id="paquetes">
   <div class="container">
     <div class="sec-head"><span class="eyebrow reveal">Packs</span><h2 class="heading-2 reveal">Elige tu pack de videos.</h2>
@@ -68,31 +68,51 @@
   </div>
 </section>
 <hr class="divider-line"/>
+<section class="section-pad">
+  <div class="container">
+    <div class="sec-head"><span class="eyebrow reveal">Así trabajamos</span><h2 class="heading-3 reveal">De tu mensaje a tu propuesta en 4 pasos.</h2></div>
+    <div class="steps reveal">
+      <div><b>Cotizas</b><span>Llenas el formulario. Toma 2 minutos.</span></div>
+      <div><b>Te escribimos</b><span>Te respondemos por WhatsApp el mismo día.</span></div>
+      <div><b>Diagnóstico</b><span>Llamada de 20 minutos, sin costo, para entender tu negocio.</span></div>
+      <div><b>Propuesta</b><span>Te la enviamos en 24 horas con la opción recomendada.</span></div>
+    </div>
+  </div>
+</section>
+<hr class="divider-line"/>
 <section class="section-pad" id="formulario" data-service="videos-ia">
   <div class="container">
     <div class="sec-head form-head">
       <span class="eyebrow reveal">Cotiza en 2 minutos</span>
       <h2 class="heading-3 reveal">Cuéntanos de tu negocio y te respondemos hoy.</h2>
-      <p class="body-text reveal">Son 7 preguntas. Con tus respuestas armamos la propuesta con el paquete que más te conviene.</p>
+      <p class="body-text reveal">Dos pasos cortos. Con tus respuestas armamos la propuesta con el paquete que más te conviene.</p>
     </div>
     <div class="form-wrap reveal" id="formwrap">
       <form class="form" id="leadform" novalidate>
-        <div class="form-grid">
-          <div class="field"><label for="f_name">Tu nombre</label><input id="f_name" name="name" autocomplete="name" placeholder="Nombre y apellido" required/><span class="msg">Escribe tu nombre.</span></div>
-          <div class="field"><label for="f_business">Nombre de tu negocio</label><input id="f_business" name="business" autocomplete="organization" placeholder="Ej: Joyería Aurora" required/><span class="msg">Escribe el nombre de tu negocio.</span></div>
-          <div class="field full"><label for="f_wa">Tu WhatsApp</label><input id="f_wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="300 123 4567" required/><span class="msg">Escribe un número de WhatsApp válido (10 dígitos).</span></div>
-          <div class="field"><label for="f_sells">¿Qué vendes?</label><select id="f_sells" name="sells" required><option value="">Elige una opción</option><option>Joyería, plata o accesorios</option><option>Ropa o moda</option><option>Papelería o útiles escolares</option><option>Salud o estética</option><option>Otro</option></select><span class="msg">Elige una opción.</span></div>
-          <div class="field"><label for="f_city">Ciudad o país</label><input id="f_city" name="city" autocomplete="address-level2" placeholder="Ej: Medellín" required/><span class="msg">Escribe tu ciudad o país.</span></div>
-          <div class="field"><label for="f_chats">¿Cuántos chats recibes al día?</label><select id="f_chats" name="chats" required><option value="">Elige una opción</option><option value="lt10">Menos de 10</option><option value="10-30">Entre 10 y 30</option><option value="30-100">Entre 30 y 100</option><option value="gt100">Más de 100</option></select><span class="msg">Elige una opción.</span></div>
-          <div class="field"><label for="f_budget">¿Cuánto quieres invertir en pauta al mes?</label><select id="f_budget" name="budget" required><option value="">Elige una opción</option><option value="lt500">Menos de $500.000</option><option value="500-1m">$500.000 – $1.000.000</option><option value="1m-3m">$1.000.000 – $3.000.000</option><option value="gt3m">Más de $3.000.000</option></select><span class="msg">Elige una opción.</span></div>
-          <div class="field"><label for="f_interest">¿Qué te interesa?</label><select id="f_interest" name="interest" required><option value="">Elige una opción</option><option value="Pack 5 · $590.000">Pack 5 · $590.000</option><option value="Pack 10 · $1.090.000">Pack 10 · $1.090.000</option><option value="Pack 20 · $2.150.000">Pack 20 · $2.150.000</option><option value="Videos por unidad">Videos por unidad</option><option value="Aún no sé, quiero que me asesoren">Aún no sé, quiero que me asesoren</option></select><span class="msg">Elige una opción.</span></div>
-          <div class="field"><label for="f_start">¿Cuándo quieres empezar?</label><select id="f_start" name="start" required><option value="">Elige una opción</option><option value="month">Este mes</option><option value="next">El próximo mes</option><option value="browsing">Solo estoy averiguando</option></select><span class="msg">Elige una opción.</span></div>
-          <input class="hp" type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true"/>
+        <div class="progress" aria-hidden="true"><span id="plabel">Paso 1 de 2 · Tus datos</span><i class="on" id="p1"></i><i id="p2"></i></div>
+        <div class="fstep" id="step1">
+          <div class="form-grid">
+            <div class="field"><label for="f_name">Tu nombre</label><input id="f_name" name="name" autocomplete="name" placeholder="Nombre y apellido" required/><span class="msg">Escribe tu nombre.</span></div>
+            <div class="field"><label for="f_business">Nombre de tu negocio</label><input id="f_business" name="business" autocomplete="organization" placeholder="Ej: Joyería Aurora" required/><span class="msg">Escribe el nombre de tu negocio.</span></div>
+            <div class="field"><label for="f_wa">Tu WhatsApp</label><input id="f_wa" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="300 123 4567" required/><span class="msg">Escribe un número de WhatsApp válido (10 dígitos).</span></div>
+            <div class="field"><label for="f_city">Ciudad o país</label><input id="f_city" name="city" autocomplete="address-level2" placeholder="Ej: Medellín" required/><span class="msg">Escribe tu ciudad o país.</span></div>
+          </div>
+          <div class="form-nav"><button class="btn-primary cta" type="button" id="next1">Continuar</button></div>
         </div>
-        <div class="form-foot">
-          <button class="btn-primary cta" type="submit" id="submitbtn">Enviar y hablar por WhatsApp</button>
-          <small>Al enviar aceptas que usemos tus datos para contactarte sobre este servicio. No compartimos tu información.</small>
-          <small class="errline" style="color:#d93025;display:none"></small>
+        <div class="fstep" id="step2" hidden>
+          <div class="form-grid">
+            <div class="field"><label for="f_sells">¿Qué vendes?</label><select id="f_sells" name="sells" required><option value="">Elige una opción</option><option>Joyería, plata o accesorios</option><option>Ropa o moda</option><option>Papelería o útiles escolares</option><option>Salud o estética</option><option>Otro</option></select><span class="msg">Elige una opción.</span></div>
+            <div class="field"><label for="f_chats">¿Cuántos chats recibes al día?</label><select id="f_chats" name="chats" required><option value="">Elige una opción</option><option value="lt10">Menos de 10</option><option value="10-30">Entre 10 y 30</option><option value="30-100">Entre 30 y 100</option><option value="gt100">Más de 100</option></select><span class="msg">Elige una opción.</span></div>
+            <div class="field"><label for="f_budget">¿Cuánto quieres invertir en pauta al mes?</label><select id="f_budget" name="budget" required><option value="">Elige una opción</option><option value="lt500">Menos de $500.000</option><option value="500-1m">$500.000 – $1.000.000</option><option value="1m-3m">$1.000.000 – $3.000.000</option><option value="gt3m">Más de $3.000.000</option></select><span class="msg">Elige una opción.</span></div>
+            <div class="field"><label for="f_interest">¿Qué te interesa?</label><select id="f_interest" name="interest" required><option value="">Elige una opción</option><option value="Pack 5 · $590.000">Pack 5 · $590.000</option><option value="Pack 10 · $1.090.000">Pack 10 · $1.090.000</option><option value="Pack 20 · $2.150.000">Pack 20 · $2.150.000</option><option value="Videos por unidad">Videos por unidad</option><option value="Aún no sé, quiero que me asesoren">Aún no sé, quiero que me asesoren</option></select><span class="msg">Elige una opción.</span></div>
+            <div class="field full"><label for="f_start">¿Cuándo quieres empezar?</label><select id="f_start" name="start" required><option value="">Elige una opción</option><option value="month">Este mes</option><option value="next">El próximo mes</option><option value="browsing">Solo estoy averiguando</option></select><span class="msg">Elige una opción.</span></div>
+            <input class="hp" type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true"/>
+          </div>
+          <div class="form-foot">
+            <button class="btn-primary cta" type="submit" id="submitbtn">Enviar y hablar por WhatsApp</button>
+            <button class="btn" type="button" id="back2" style="border:0">← Volver a mis datos</button>
+            <small>Al enviar aceptas que usemos tus datos para contactarte sobre este servicio. No compartimos tu información.</small>
+          </div>
         </div>
       </form>
       <div class="thanks" id="thanks" role="status">
@@ -101,6 +121,7 @@
         <a class="btn-primary cta" id="thanks-wa" target="_blank" rel="noopener" href="#">Abrir WhatsApp</a>
       </div>
     </div>
+    <p class="help caption">¿Prefieres hablar ya? <a data-wa href="#" rel="noopener">Escríbenos por WhatsApp</a></p>
   </div>
 </section>
 <footer>
