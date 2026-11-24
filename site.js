@@ -90,9 +90,17 @@ if(form){
     ['sells','chats','budget','interest','start'].forEach(function(k){var bad=!f[k].value;setErr(f[k],bad);if(bad)ok=false;});
     if(!ok){var first=form.querySelector('.err');if(first)first.scrollIntoView({behavior:'smooth',block:'center'});return;}
     var v={name:f.name.value.trim(),business:f.business.value.trim(),whatsapp:'57'+digits,sells:f.sells.value,city:f.city.value.trim(),chats:f.chats.value,budget:f.budget.value,interest:f.interest.value,start:f.start.value};
-    var tier=score(v), u=utm();
-    var rec=Object.assign({service:formSec.dataset.service,page:location.pathname,tier:tier,name:v.name,business:v.business,whatsapp:v.whatsapp,sells:v.sells,city:v.city,chats_per_day:label(f.chats),monthly_ad_budget:label(f.budget),interest:v.interest,start_when:label(f.start),referrer:document.referrer||null},u);
-    var msg='Hola, soy '+v.name+' de '+v.business+' ('+v.city+'). Quiero cotizar: '+v.interest+'. Vendo: '+v.sells+'. Chats al día: '+label(f.chats)+'. Pauta al mes: '+label(f.budget)+'. Quiero empezar: '+label(f.start)+'.';
+    var tier=score(v), u=utm(), ref='GS-'+tier+'-'+Math.floor(1000+Math.random()*9000);
+    var rec=Object.assign({ref:ref,service:formSec.dataset.service,page:location.pathname,tier:tier,name:v.name,business:v.business,whatsapp:v.whatsapp,sells:v.sells,city:v.city,chats_per_day:label(f.chats),monthly_ad_budget:label(f.budget),interest:v.interest,start_when:label(f.start),referrer:document.referrer||null},u);
+    var msg='Hola, quiero cotizar: *'+v.interest+'*\n\n'+
+      '• Nombre: '+v.name+'\n'+
+      '• Negocio: '+v.business+'\n'+
+      '• Qué vende: '+v.sells+'\n'+
+      '• Ciudad: '+v.city+'\n'+
+      '• Chats al día: '+label(f.chats)+'\n'+
+      '• Pauta al mes: '+label(f.budget)+'\n'+
+      '• Quiere empezar: '+label(f.start)+'\n\n'+
+      'Ref: '+ref;
     var btn=document.getElementById('submitbtn'); btn.disabled=true; btn.textContent='Enviando…';
     var done=function(){
       track('Lead',{content_name:formSec.dataset.service,value:0,currency:'COP',lead_tier:tier});
