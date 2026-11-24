@@ -1,7 +1,7 @@
 /* Configuración del sitio — edita aquí */
 window.GS = {
   WHATSAPP: '573005767237',
-  PIXEL_ID: '',   // ← pega aquí el ID del píxel de Meta cuando lo tengas
+  PIXEL_ID: '1160857216283740',   // Píxel "Growth Strategy · Sitio web" (cuenta Growth Strategy)
   // Los leads se guardan en la tabla landing_leads (solo inserción pública). Vacío = solo se envían por WhatsApp.
   LEADS_URL: 'https://wwlnclellqcztrfizcpk.supabase.co/rest/v1/landing_leads',
   LEADS_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3bG5jbGVsbHFjenRyZml6Y3BrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDQ1ODMsImV4cCI6MjA4OTAyMDU4M30.DZMfHc9MlgxSB68MBQ1I_Q2kl7vCnECQPWFAW9GJgLY',
