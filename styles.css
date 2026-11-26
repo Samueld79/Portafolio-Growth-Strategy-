@@ -1305,9 +1305,9 @@ body.has-ticker{padding-top:var(--tk-h)}
 /* Historias de éxito: carrusel automático */
 .stories-wrapper{width:100%;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);padding:var(--space-md) 0}
 .stories-track{display:flex;gap:20px;width:max-content;padding:0 20px}
-.stories-track.run{animation:storyScroll 80s linear infinite}
+.stories-track.run{animation:storyScroll var(--dur,60s) linear infinite}
 .stories-track.run:hover,.stories-track.paused{animation-play-state:paused}
-@keyframes storyScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes storyScroll{from{transform:translateX(0)}to{transform:translateX(calc(-1px * var(--shift,0)))}}
 .story-item{flex:none;padding:0;border:1px solid var(--divider);border-radius:20px;background:#fff;overflow:hidden;cursor:zoom-in;box-shadow:0 6px 22px rgba(var(--palette-grey-1000-rgb),.08);transition:transform .3s,box-shadow .3s}
 .story-item:hover,.story-item:focus-visible{transform:translateY(-4px);box-shadow:0 14px 34px rgba(var(--palette-grey-1000-rgb),.16);outline:none}
 .story-item img{display:block;height:440px;width:auto}
