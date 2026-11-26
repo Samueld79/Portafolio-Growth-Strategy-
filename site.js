@@ -81,7 +81,7 @@ if(form){
   function label(selEl){return selEl.options[selEl.selectedIndex].text;}
   function setErr(el,bad){el.closest('.field').classList.toggle('err',bad);}
   function v1(){var f=form.elements,ok=true;
-    ['name','business','city'].forEach(function(k){var bad=f[k].value.trim().length<2;setErr(f[k],bad);if(bad)ok=false;});
+    ['name','business','city','instagram'].forEach(function(k){var bad=f[k].value.trim().length<2;setErr(f[k],bad);if(bad)ok=false;});
     var digits=f.whatsapp.value.replace(/\D/g,''); if(digits.indexOf('57')===0&&digits.length===12)digits=digits.slice(2);
     var badw=digits.length!==10; setErr(f.whatsapp,badw); if(badw)ok=false;
     return {ok:ok,digits:digits};}
@@ -100,14 +100,17 @@ if(form){
     if(!ok){go(1);return;}
     ok=v2();
     if(!ok){var first=form.querySelector('.err');if(first)first.scrollIntoView({behavior:'smooth',block:'center'});return;}
-    var v={name:f.name.value.trim(),business:f.business.value.trim(),whatsapp:'57'+digits,sells:f.sells.value,city:f.city.value.trim(),chats:f.chats.value,budget:f.budget.value,interest:f.interest.value,start:f.start.value};
+    var v={name:f.name.value.trim(),business:f.business.value.trim(),whatsapp:'57'+digits,sells:f.sells.value,city:f.city.value.trim(),instagram:f.instagram.value.trim(),chats:f.chats.value,budget:f.budget.value,interest:f.interest.value,start:f.start.value};
     var tier=score(v), u=utm(), ref='GS-'+tier+'-'+Math.floor(1000+Math.random()*9000);
-    var rec=Object.assign({ref:ref,service:formSec.dataset.service,page:location.pathname,tier:tier,name:v.name,business:v.business,whatsapp:v.whatsapp,sells:v.sells,city:v.city,chats_per_day:label(f.chats),monthly_ad_budget:label(f.budget),interest:v.interest,start_when:label(f.start),referrer:document.referrer||null},u);
-    var msg='Hola, quiero cotizar: *'+v.interest+'*\n\n'+
+    var rec=Object.assign({ref:ref,service:formSec.dataset.service,page:location.pathname,tier:tier,name:v.name,business:v.business,whatsapp:v.whatsapp,sells:v.sells,city:v.city,instagram:v.instagram,chats_per_day:label(f.chats),monthly_ad_budget:label(f.budget),interest:v.interest,start_when:label(f.start),referrer:document.referrer||null},u);
+    var SVC={'whatsapp-api':'WhatsApp API + CRM','meta-ads':'Pauta en Meta (Meta Ads)','contenido':'Contenido presencial','videos-ia':'Videos 100 % IA'};
+    var msg='Hola, quiero cotizar: *'+(SVC[formSec.dataset.service]||formSec.dataset.service)+'*\n\n'+
+      '• Paquete: '+v.interest+'\n'+
       '• Nombre: '+v.name+'\n'+
       '• Negocio: '+v.business+'\n'+
       '• Qué vende: '+v.sells+'\n'+
       '• Ciudad: '+v.city+'\n'+
+      '• Instagram: '+v.instagram+'\n'+
       '• Chats al día: '+label(f.chats)+'\n'+
       '• Pauta al mes: '+label(f.budget)+'\n'+
       '• Quiere empezar: '+label(f.start)+'\n\n'+
