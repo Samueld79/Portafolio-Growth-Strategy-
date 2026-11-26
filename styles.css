@@ -1301,3 +1301,19 @@ body.has-ticker{padding-top:var(--tk-h)}
 .form-nav .btn-primary{min-width:220px;justify-content:center}
 .help{text-align:center;margin-top:var(--space-xl)}
 .help a{color:var(--palette-blue-600);font-weight:500}
+
+/* Historias de éxito: carrusel automático */
+.stories-wrapper{width:100%;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);padding:var(--space-md) 0}
+.stories-track{display:flex;gap:20px;width:max-content;padding:0 20px}
+.stories-track.run{animation:storyScroll 80s linear infinite}
+.stories-track.run:hover,.stories-track.paused{animation-play-state:paused}
+@keyframes storyScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.story-item{flex:none;padding:0;border:1px solid var(--divider);border-radius:20px;background:#fff;overflow:hidden;cursor:zoom-in;box-shadow:0 6px 22px rgba(var(--palette-grey-1000-rgb),.08);transition:transform .3s,box-shadow .3s}
+.story-item:hover,.story-item:focus-visible{transform:translateY(-4px);box-shadow:0 14px 34px rgba(var(--palette-grey-1000-rgb),.16);outline:none}
+.story-item img{display:block;height:440px;width:auto}
+.story-modal{position:fixed;inset:0;z-index:1000;background:rgba(10,15,20,.88);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.story-modal[hidden]{display:none}
+.story-modal img{max-width:100%;max-height:100%;border-radius:14px;background:#fff}
+.story-close{position:absolute;top:14px;right:18px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;line-height:1;cursor:pointer}
+@media(max-width:640px){.story-item img{height:340px}.stories-track{gap:14px}}
+@media(prefers-reduced-motion:reduce){.stories-track.run{animation:none}.stories-wrapper{overflow-x:auto;-webkit-mask:none;mask:none}}

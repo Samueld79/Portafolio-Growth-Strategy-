@@ -132,3 +132,20 @@ if(form){
   });
 }
 })();
+
+/* Historias de éxito: carrusel que gira solo + ampliar */
+(function(){
+  var t=document.getElementById('storiesTrack'),m=document.getElementById('storyModal');
+  if(!t||!m)return;
+  var mi=m.querySelector('img');
+  function open(src){mi.src=src;m.hidden=false;t.classList.add('paused');document.body.style.overflow='hidden'}
+  function close(){m.hidden=true;mi.removeAttribute('src');t.classList.remove('paused');document.body.style.overflow=''}
+  t.addEventListener('click',function(e){var b=e.target.closest('.story-item');if(b)open(b.getAttribute('data-full'))});
+  m.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden)close()});
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){
+    Array.prototype.slice.call(t.children).forEach(function(n){var c=n.cloneNode(true);c.setAttribute('aria-hidden','true');c.tabIndex=-1;t.appendChild(c)});
+    t.classList.add('run');
+  }
+})();
